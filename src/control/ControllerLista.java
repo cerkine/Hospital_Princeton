@@ -1,4 +1,4 @@
-package sample;
+package control;
 
 public class ControllerLista {
 
