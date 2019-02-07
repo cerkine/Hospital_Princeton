@@ -16,7 +16,7 @@
                         <TextField fx:id="txtDNI"  maxWidth="1.7976931348623157E308" promptText="DNI" />
                         <TextField fx:id="txtNom"  maxWidth="1.7976931348623157E308"  promptText="Nom" />
                         <TextField fx:id="txtCognoms"  maxWidth="1.7976931348623157E308" promptText="Cognoms" />
-                        <Button alignment="CENTER"  contentDisplay="CENTER" maxWidth="1.7976931348623157E308"  text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
+                        <Button alignment="CENTER"  onAction="#btnCerca" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"  text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
                     </children>
                     <VBox.margin>
                         <Insets top="5.0" />

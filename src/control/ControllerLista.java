@@ -92,10 +92,14 @@ public class ControllerLista implements Initializable {
     }
 
     public void btnCerca(ActionEvent event) {
-        List<Pacient> pacients = p.stream().filter(pacient -> pacient.getDNI().equals(txtDNI.getText())).collect(Collectors.toList());
-        if(txtDNI.getText().equals("")) {
+        List<Pacient> pacients = p.stream().filter(pacient -> pacient.getDNI().contains(txtDNI.getText())
+                && pacient.getCognoms().contains(txtCognoms.getText())
+                && pacient.getNom().contains(txtNom.getText())).collect(Collectors.toList());
+        if(txtDNI.getText().equals("")&&txtCognoms.getText().equals("")&&txtNom.getText().equals("")) {
             updateTable(p);
         }else updateTable(pacients);
+
+
     }
 
     private void updateTable(List<Pacient> pacients) {
