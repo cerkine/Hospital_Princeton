@@ -31,7 +31,7 @@ public class Controller implements Initializable {
             AnchorPane anchorPaneLlista = null;
             try {
 
-                anchorPaneLlista = FXMLLoader.load(getClass().getResource("../sample/Lista.fxml"));
+                anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/Lista.fxml"));
 
             } catch (IOException e) {
                 e.printStackTrace();
