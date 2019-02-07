@@ -65,7 +65,6 @@ public class ControllerLista implements Initializable {
 
         tablePacients.getColumns().addAll(DNI, Nom, Cognoms, DataNaix, Genre, Telefon, pes, Alçada);
 
-
         //data.add(new Pacient("111", "n", "co", LocalDate.of(2000, 12, 12), Persona.Genere.HOME, "55555", 5.4f, 100));
         loadData();
         data.addAll(p);
