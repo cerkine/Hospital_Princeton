@@ -5,13 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.Pacient;
 import model.Hospital;
@@ -32,6 +30,10 @@ public class ControllerLista implements Initializable {
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
     @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2;
+    @FXML Text planoEdat;
+    @FXML RadioButton rbedat, rbrangedat;
+
+    int edat1Int, edat2Int;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,18 +94,52 @@ public class ControllerLista implements Initializable {
     }
 
     public void btnCerca(ActionEvent event) {
-        List<Pacient> pacients = p.stream().filter(pacient -> pacient.getDNI().contains(txtDNI.getText())
-                && pacient.getNom().contains(txtNom.getText())
-                && pacient.getCognoms().contains(txtCognoms.getText())
-                && pacient.getEdat() > Integer.parseInt(edat1.getText()) && pacient.getEdat() < Integer.parseInt(edat2.getText()))
-                .collect(Collectors.toList());
-        if(txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && edat1.getText().equals("")) {
-            updateTable(p);
-        }else updateTable(pacients);
+        if (edat1.getText().equals("")){
+            edat1Int = 0;
+        }
+        else {
+            edat1Int = Integer.parseInt(this.edat1.getText());
+        }
+        if (edat2.getText().equals("")){
+            edat2Int = Integer.MAX_VALUE;
+        }
+        else {
+            edat2Int = Integer.parseInt(this.edat2.getText());
+        }
+        if (rbrangedat.isSelected()) {
+            List<Pacient> pacients = p.stream().filter(pacient ->
+                pacient.getDNI().contains(txtDNI.getText())
+                        && pacient.getNom().contains(txtNom.getText())
+                        && pacient.getCognoms().contains(txtCognoms.getText())
+                        && pacient.getEdat() > edat1Int && pacient.getEdat() < edat2Int
+            )
+                    .collect(Collectors.toList());
+            if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
+                updateTable(p);
+            } else updateTable(pacients);
+        }
+        else {
+            List<Pacient> pacients = p.stream().filter(pacient -> pacient.getDNI().contains(txtDNI.getText())
+                    && pacient.getNom().contains(txtNom.getText())
+                    && pacient.getCognoms().contains(txtCognoms.getText())
+                    && pacient.getEdat() == edat1Int)
+                    .collect(Collectors.toList());
+            if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("")) {
+                updateTable(p);
+            } else updateTable(pacients);
+        }
+
     }
 
     public void makeVisEdat(ActionEvent event){
-
+        if (rbedat.isSelected()){
+            planoEdat.setVisible(false);
+            edat2.setVisible(false);
+        }
+        else if (rbrangedat.isSelected()){
+            planoEdat.setVisible(true);
+            edat2.setVisible(true);
+        }
     }
 
     private void updateTable(List<Pacient> pacients) {
