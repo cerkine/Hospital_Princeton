@@ -57,6 +57,33 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <TextField fx:id="peso1" maxWidth="1.7976931348623157E308" promptText="Pes" />
+                  <Text fx:id="planoPeso" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="peso2" maxWidth="1.7976931348623157E308" promptText="Pes" visible="false" />
+                  <RadioButton fx:id="rbpeso" mnemonicParsing="false" onAction="#makeVisPeso" selected="true" text="Pes">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="peso" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbrangpeso" mnemonicParsing="false" onAction="#makeVisPeso" text="Rang de pes " toggleGroup="$peso">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
             </children>
         </VBox>
     </children>
