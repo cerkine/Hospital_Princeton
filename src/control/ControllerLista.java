@@ -29,11 +29,12 @@ public class ControllerLista implements Initializable {
 
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
-    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, pes1, pes2;
-    @FXML Text planoEdat, planoPes;
-    @FXML RadioButton rbedat, rbrangedat, rbpes, rbrangepes;
+    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2;
+    @FXML Text planoEdat, planoPeso;
+    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso;
 
-    private int edat1Int, edat2Int, pes1Int, pes2Int;
+    private int edat1Int, edat2Int;
+    private float pes1Int, pes2Int;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -106,20 +107,21 @@ public class ControllerLista implements Initializable {
         else {
             edat2Int = Integer.parseInt(this.edat2.getText());
         }
-        if (pes1.getText().equals("")){
+        if (peso1.getText().equals("")){
             pes1Int = 0;
         }
         else {
-            pes1Int = Integer.parseInt(this.pes1.getText());
+            pes1Int = Float.parseFloat(this.peso1.getText());
         }
-        if (pes2.getText().equals("")){
+        if (peso2.getText().equals("")){
             pes2Int = Integer.MAX_VALUE;
         }
         else {
-            pes2Int = Integer.parseInt(this.pes2.getText());
+            pes2Int = Float.parseFloat(this.peso2.getText());
         }
         if (rbrangedat.isSelected()) {
-            if (rbrangepes.isSelected()) {
+
+            if (rbrangpeso.isSelected()) {
                 List<Pacient> pacients = p.stream().filter(pacient ->
                         pacient.getDNI().contains(txtDNI.getText())
                                 && pacient.getNom().contains(txtNom.getText())
@@ -148,12 +150,12 @@ public class ControllerLista implements Initializable {
 
         }
         else {
-            if (rbrangepes.isSelected()) {
+            if (rbrangpeso.isSelected()) {
                 List<Pacient> pacients = p.stream().filter(pacient ->
                         pacient.getDNI().contains(txtDNI.getText())
                                 && pacient.getNom().contains(txtNom.getText())
                                 && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() > edat1Int && pacient.getEdat() < edat2Int
+                                && pacient.getEdat() == edat1Int
                                 && pacient.getPes() > pes1Int && pacient.getPes() < pes2Int
                 )
                         .collect(Collectors.toList());
@@ -166,7 +168,7 @@ public class ControllerLista implements Initializable {
                         pacient.getDNI().contains(txtDNI.getText())
                                 && pacient.getNom().contains(txtNom.getText())
                                 && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() > edat1Int && pacient.getEdat() < edat2Int
+                                && pacient.getEdat() == edat1Int
                                 && pacient.getPes() == pes1Int
                 )
                         .collect(Collectors.toList());
@@ -186,6 +188,17 @@ public class ControllerLista implements Initializable {
         else if (rbrangedat.isSelected()){
             planoEdat.setVisible(true);
             edat2.setVisible(true);
+        }
+    }
+
+    public void makeVisPeso(ActionEvent event){
+        if (rbpeso.isSelected()){
+            planoPeso.setVisible(false);
+            peso2.setVisible(false);
+        }
+        else if (rbrangpeso.isSelected()){
+            planoPeso.setVisible(true);
+            peso2.setVisible(true);
         }
     }
 
