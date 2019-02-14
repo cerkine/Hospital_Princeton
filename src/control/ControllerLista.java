@@ -31,7 +31,7 @@ public class ControllerLista implements Initializable {
 
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
-    @FXML TextField txtDNI, txtNom, txtCognoms;
+    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,11 +94,16 @@ public class ControllerLista implements Initializable {
     public void btnCerca(ActionEvent event) {
         List<Pacient> pacients = p.stream().filter(pacient -> pacient.getDNI().contains(txtDNI.getText())
                 && pacient.getNom().contains(txtNom.getText())
-                && pacient.getCognoms().contains(txtCognoms.getText()))
+                && pacient.getCognoms().contains(txtCognoms.getText())
+                && pacient.getEdat() > Integer.parseInt(edat1.getText()) && pacient.getEdat() < Integer.parseInt(edat2.getText()))
                 .collect(Collectors.toList());
-        if(txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("")) {
+        if(txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && edat1.getText().equals("")) {
             updateTable(p);
         }else updateTable(pacients);
+    }
+
+    public void makeVisEdat(ActionEvent event){
+
     }
 
     private void updateTable(List<Pacient> pacients) {
