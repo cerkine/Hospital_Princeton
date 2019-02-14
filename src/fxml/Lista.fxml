@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -29,6 +30,33 @@
                         <Insets top="5.0" />
                     </padding>
                 </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <TextField fx:id="edat1" maxWidth="1.7976931348623157E308" promptText="Edat" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Entre">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="edat2" maxWidth="1.7976931348623157E308" promptText="Edat" />
+                  <RadioButton fx:id="rbedat" mnemonicParsing="false" onAction="#makeVisEdat" text="Edat">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="EDAD" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbrangedat" mnemonicParsing="false" onAction="#makeVisEdat" text="Rang d'edats " toggleGroup="$EDAD">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
             </children>
         </VBox>
     </children>
