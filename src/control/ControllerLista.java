@@ -95,6 +95,8 @@ public class ControllerLista implements Initializable {
     }
 
     public void btnCerca(ActionEvent event) {
+
+        List<Pacient> pacients = p.stream().collect(Collectors.toList());
         if (edat1.getText().equals("")){
             edat1Int = 0;
         }
@@ -119,65 +121,43 @@ public class ControllerLista implements Initializable {
         else {
             pes2Int = Float.parseFloat(this.peso2.getText());
         }
-        if (rbrangedat.isSelected()) {
 
-            if (rbrangpeso.isSelected()) {
-                List<Pacient> pacients = p.stream().filter(pacient ->
-                        pacient.getDNI().contains(txtDNI.getText())
-                                && pacient.getNom().contains(txtNom.getText())
-                                && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() > edat1Int && pacient.getEdat() < edat2Int
-                                && pacient.getPes() > pes1Int && pacient.getPes() < pes2Int
-                )
-                        .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
-                    updateTable(p);
-                } else updateTable(pacients);
-            }
-            else {
-                List<Pacient> pacients = p.stream().filter(pacient ->
-                        pacient.getDNI().contains(txtDNI.getText())
-                                && pacient.getNom().contains(txtNom.getText())
-                                && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() > edat1Int && pacient.getEdat() < edat2Int
-                                && pacient.getPes() == pes1Int
-                )
-                        .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
-                    updateTable(p);
-                } else updateTable(pacients);
-            }
 
-        }
-        else {
-            if (rbrangpeso.isSelected()) {
-                List<Pacient> pacients = p.stream().filter(pacient ->
-                        pacient.getDNI().contains(txtDNI.getText())
-                                && pacient.getNom().contains(txtNom.getText())
-                                && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() == edat1Int
-                                && pacient.getPes() > pes1Int && pacient.getPes() < pes2Int
-                )
-                        .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
-                    updateTable(p);
-                } else updateTable(pacients);
-            }
-            else {
-                List<Pacient> pacients = p.stream().filter(pacient ->
-                        pacient.getDNI().contains(txtDNI.getText())
-                                && pacient.getNom().contains(txtNom.getText())
-                                && pacient.getCognoms().contains(txtCognoms.getText())
-                                && pacient.getEdat() == edat1Int
-                                && pacient.getPes() == pes1Int
-                )
-                        .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
-                    updateTable(p);
-                } else updateTable(pacients);
+        pacients=pacients.stream().filter(pacient -> pacient.getDNI().contains(txtDNI.getText())).collect(Collectors.toList());
+
+        pacients=pacients.stream().filter(pacient -> pacient.getNom().contains(txtNom.getText())).collect(Collectors.toList());
+
+        pacients=pacients.stream().filter(pacient -> pacient.getCognoms().contains(txtCognoms.getText())).collect(Collectors.toList());
+        if (rbedat.isSelected()){
+            if (!edat1.getText().equals(""))
+            pacients=pacients.stream().filter(pacient -> pacient.getEdat()==(Integer.parseInt(edat1.getText()))).collect(Collectors.toList());
+        }else {
+            if (!(edat1.getText().equals("") && edat2.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getEdat()>(edat1Int) && pacient.getEdat()<(edat2Int)).collect(Collectors.toList());
             }
         }
 
+        if (rbpeso.isSelected()){
+            if (!peso1.getText().equals(""))
+                pacients=pacients.stream().filter(pacient -> pacient.getPes()==(Float.parseFloat(peso1.getText()))).collect(Collectors.toList());
+        }else {
+            if (!(peso1.getText().equals("") && peso2.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getPes()>(pes1Int) && pacient.getPes()<(pes2Int)).collect(Collectors.toList());
+            }
+        }
+
+
+
+
+
+
+
+        if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")&&
+        this.peso1.getText().equals("") && this.peso2.getText().equals("")) {
+            updateTable(p);
+        } else updateTable(pacients);
     }
 
     public void makeVisEdat(ActionEvent event){
