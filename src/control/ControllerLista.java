@@ -29,12 +29,14 @@ public class ControllerLista implements Initializable {
 
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
-    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2;
-    @FXML Text planoEdat, planoPeso;
-    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso;
+    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2,alçada1,alçada2;
+    @FXML Text planoEdat, planoPeso,planoAlçada;
+    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada;
 
     private int edat1Int, edat2Int;
     private float pes1Int, pes2Int;
+    private int alçada1Int;
+    private int alçada2Int;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -109,17 +111,28 @@ public class ControllerLista implements Initializable {
         else {
             edat2Int = Integer.parseInt(this.edat2.getText());
         }
-        if (peso1.getText().equals("")){
-            pes1Int = 0;
-        }
-        else {
+        if (peso1.getText().equals("")) {
+            pes1Int = 0.0f;
+        } else {
             pes1Int = Float.parseFloat(this.peso1.getText());
         }
-        if (peso2.getText().equals("")){
-            pes2Int = Integer.MAX_VALUE;
+        if (peso2.getText().equals("")) {
+            pes2Int = Float.MAX_VALUE;
+        } else {
+            pes2Int = Float.parseFloat(this.peso2.getText());
+        }
+
+        if (alçada1.getText().equals("")){
+            alçada1Int = 0;
         }
         else {
-            pes2Int = Float.parseFloat(this.peso2.getText());
+            alçada1Int = Integer.parseInt(this.alçada1.getText());
+        }
+        if (alçada2.getText().equals("")){
+            alçada2Int = Integer.MAX_VALUE;
+        }
+        else {
+            alçada2Int = Integer.parseInt(this.alçada2.getText());
         }
 
 
@@ -130,7 +143,7 @@ public class ControllerLista implements Initializable {
         pacients=pacients.stream().filter(pacient -> pacient.getCognoms().contains(txtCognoms.getText())).collect(Collectors.toList());
         if (rbedat.isSelected()){
             if (!edat1.getText().equals(""))
-            pacients=pacients.stream().filter(pacient -> pacient.getEdat()==(Integer.parseInt(edat1.getText()))).collect(Collectors.toList());
+            pacients=pacients.stream().filter(pacient -> pacient.getEdat()==(edat1Int)).collect(Collectors.toList());
         }else {
             if (!(edat1.getText().equals("") && edat2.getText().equals(""))){
                 pacients=pacients.stream().filter(pacient ->
@@ -140,7 +153,7 @@ public class ControllerLista implements Initializable {
 
         if (rbpeso.isSelected()){
             if (!peso1.getText().equals(""))
-                pacients=pacients.stream().filter(pacient -> pacient.getPes()==(Float.parseFloat(peso1.getText()))).collect(Collectors.toList());
+                pacients=pacients.stream().filter(pacient -> pacient.getPes()==(pes1Int)).collect(Collectors.toList());
         }else {
             if (!(peso1.getText().equals("") && peso2.getText().equals(""))){
                 pacients=pacients.stream().filter(pacient ->
@@ -148,17 +161,23 @@ public class ControllerLista implements Initializable {
             }
         }
 
-
-
-
-
-
+        if (rbalçada.isSelected()){
+            if (!alçada1.getText().equals(""))
+                pacients=pacients.stream().filter(pacient -> pacient.getAlçada()==(alçada1Int)).collect(Collectors.toList());
+        }else {
+            if (!(alçada1.getText().equals("") && alçada2.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getAlçada()>(alçada1Int) && pacient.getAlçada()<(alçada2Int)).collect(Collectors.toList());
+            }
+        }
 
         if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")&&
-        this.peso1.getText().equals("") && this.peso2.getText().equals("")) {
+        this.peso1.getText().equals("") && this.peso2.getText().equals("") && this.alçada1.getText().equals("") && this.alçada2.getText().equals("")) {
             updateTable(p);
         } else updateTable(pacients);
     }
+
+
 
     public void makeVisEdat(ActionEvent event){
         if (rbedat.isSelected()){
@@ -187,6 +206,19 @@ public class ControllerLista implements Initializable {
         data.addAll(pacients);
         tablePacients.setItems(data);
     }
+
+    public void makeVisAlçada(ActionEvent event){
+        if (rbalçada.isSelected()){
+            planoAlçada.setVisible(false);
+            alçada2.setVisible(false);
+        }
+        else{
+            planoAlçada.setVisible(true);
+            alçada2.setVisible(true);
+        }
+    }
+
+
 
     public void changeText(KeyEvent keyEvent) {
         data.clear();
