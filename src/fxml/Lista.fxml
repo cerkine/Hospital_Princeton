@@ -74,9 +74,9 @@
                         <ToggleGroup fx:id="peso" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbrangpeso" mnemonicParsing="false" onAction="#makeVisPeso" text="Rang de pes " toggleGroup="$peso">
+                  <RadioButton fx:id="rbrangpeso" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#makeVisPeso" text="Rang de pes " toggleGroup="$peso">
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="37.0" />
                      </HBox.margin>
                   </RadioButton>
                </children>
@@ -87,7 +87,7 @@
             <HBox spacing="5.0">
                <children>
                   <TextField fx:id="alçada1" maxWidth="1.7976931348623157E308" promptText="Alçada" />
-                  <Text fx:id="planoAlçada1" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
+                  <Text fx:id="planoAlçada" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
