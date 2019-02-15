@@ -108,13 +108,13 @@ public class ControllerLista implements Initializable {
             edat2Int = Integer.parseInt(this.edat2.getText());
         }
         if (peso1.getText().equals("")){
-            pes1Int = 0;
+            pes1Int = 0.0f;
         }
         else {
             pes1Int = Float.parseFloat(this.peso1.getText());
         }
         if (peso2.getText().equals("")){
-            pes2Int = Integer.MAX_VALUE;
+            pes2Int = Float.MAX_VALUE;
         }
         else {
             pes2Int = Float.parseFloat(this.peso2.getText());
@@ -130,7 +130,7 @@ public class ControllerLista implements Initializable {
                                 && pacient.getPes() > pes1Int && pacient.getPes() < pes2Int
                 )
                         .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
+                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("") && this.peso1.getText().equals("") && this.peso2.getText().equals("")) {
                     updateTable(p);
                 } else updateTable(pacients);
             }
@@ -143,7 +143,7 @@ public class ControllerLista implements Initializable {
                                 && pacient.getPes() == pes1Int
                 )
                         .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
+                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("") && this.peso1.getText().equals("")) {
                     updateTable(p);
                 } else updateTable(pacients);
             }
@@ -159,7 +159,7 @@ public class ControllerLista implements Initializable {
                                 && pacient.getPes() > pes1Int && pacient.getPes() < pes2Int
                 )
                         .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
+                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.peso1.getText().equals("") && this.peso2.getText().equals("")) {
                     updateTable(p);
                 } else updateTable(pacients);
             }
@@ -172,7 +172,7 @@ public class ControllerLista implements Initializable {
                                 && pacient.getPes() == pes1Int
                 )
                         .collect(Collectors.toList());
-                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.edat2.getText().equals("")) {
+                if (txtDNI.getText().equals("") && txtNom.getText().equals("") && txtCognoms.getText().equals("") && this.edat1.getText().equals("") && this.peso1.getText().equals("")) {
                     updateTable(p);
                 } else updateTable(pacients);
             }
