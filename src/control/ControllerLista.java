@@ -3,8 +3,10 @@ package control;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
@@ -13,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.Pacient;
 import model.Hospital;
+import model.Persona;
 
 import java.io.File;
 import java.net.URL;
@@ -32,6 +35,8 @@ public class ControllerLista implements Initializable {
     @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2,alçada1,alçada2;
     @FXML Text planoEdat, planoPeso,planoAlçada;
     @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada;
+    @FXML PieChart idPieChart;
+
 
     private int edat1Int, edat2Int;
     private float pes1Int, pes2Int;
@@ -235,5 +240,27 @@ public class ControllerLista implements Initializable {
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
             System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
         }
+    }
+
+    public void btnChart(ActionEvent event) {
+        setChart();
+    }
+
+    public void loadChart(Event event) {
+        setChart();
+    }
+
+    private void setChart() {
+        idPieChart.getData().clear();
+        long dones = p.stream()
+                .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
+                .count();
+        long homes = p.stream()
+                .filter(pacient -> pacient.getGenere()== Persona.Genere.HOME)
+                .count();
+        idPieChart.setTitle("Gènere");
+        idPieChart.getData().add(new PieChart.Data(Persona.Genere.DONA.toString(),dones));
+        idPieChart.getData().add(new PieChart.Data(Persona.Genere.HOME.toString(),homes));
+
     }
 }
