@@ -29,6 +29,7 @@ public class Controller implements Initializable {
         if (btn.equals("btnLlista")) {
             // ListView lsvLlista = new ListView();
             AnchorPane anchorPaneLlista = null;
+            paneDret.getChildren().clear();
             try {
 
                 anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/Lista.fxml"));
@@ -38,8 +39,16 @@ public class Controller implements Initializable {
             }
             paneDret.getChildren().add(anchorPaneLlista);
 
-        } else {
+        } else if (btn.equals("btnCerca")){
+            AnchorPane anchorPaneLlista = null;
             paneDret.getChildren().clear();
+            try {
+                anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/LlistaEspera.fxml"));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            paneDret.getChildren().add(anchorPaneLlista);
         }
 
 

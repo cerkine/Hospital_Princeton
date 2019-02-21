@@ -46,6 +46,11 @@ public class ControllerLista implements Initializable {
     private int alçada1Int;
     private int alçada2Int;
 
+    private int edatD1Int, edatD2Int;
+    private float pesD1Int, pesD2Int;
+    private int alçadaD1Int;
+    private int alçadaD2Int;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         data = FXCollections.observableArrayList();
@@ -268,16 +273,77 @@ public class ControllerLista implements Initializable {
 
     private void setChart() {
         idPieChart.getData().clear();
-        long dones = p.stream()
-                .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
-                .count();
-        long homes = p.stream()
-                .filter(pacient -> pacient.getGenere()== Persona.Genere.HOME)
-                .count();
-        idPieChart.setTitle("Gènere");
-        idPieChart.getData().add(new PieChart.Data(Persona.Genere.DONA.toString(),dones));
-        idPieChart.getData().add(new PieChart.Data(Persona.Genere.HOME.toString(),homes));
+        List<Pacient> pacients = p.stream().collect(Collectors.toList());
+        long totalPacientes = pacients.stream().count();
+        if (edat1D.getText().equals("")){
+            edatD1Int = 0;
+        }
+        else {
+            edatD1Int = Integer.parseInt(this.edat1D.getText());
+        }
+        if (edat2D.getText().equals("")){
+            edatD2Int = Integer.MAX_VALUE;
+        }
+        else {
+            edatD2Int = Integer.parseInt(this.edat2D.getText());
+        }
+        if (peso1D.getText().equals("")) {
+            pesD1Int = 0.0f;
+        } else {
+            pesD1Int = Float.parseFloat(this.peso1D.getText());
+        }
+        if (peso2D.getText().equals("")) {
+            pesD2Int = Float.MAX_VALUE;
+        } else {
+            pesD2Int = Float.parseFloat(this.peso2D.getText());
+        }
 
+        if (alçada1D.getText().equals("")){
+            alçadaD1Int = 0;
+        }
+        else {
+            alçadaD1Int = Integer.parseInt(this.alçada1D.getText());
+        }
+        if (alçada2D.getText().equals("")){
+            alçadaD2Int = Integer.MAX_VALUE;
+        }
+        else {
+            alçadaD2Int = Integer.parseInt(this.alçada2D.getText());
+        }
+
+        if (rbedatD.isSelected()){
+            if (!edat1D.getText().equals(""))
+                pacients=pacients.stream().filter(pacient -> pacient.getEdat()==(edatD1Int)).collect(Collectors.toList());
+        }else {
+            if (!(edat1D.getText().equals("") && edat2D.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getEdat()>(edatD1Int) && pacient.getEdat()<(edatD2Int)).collect(Collectors.toList());
+            }
+        }
+
+        if (rbpesoD.isSelected()){
+            if (!peso1D.getText().equals(""))
+                pacients=pacients.stream().filter(pacient -> pacient.getPes()==(pesD1Int)).collect(Collectors.toList());
+        }else {
+            if (!(peso1D.getText().equals("") && peso2D.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getPes()>(pesD1Int) && pacient.getPes()<(pesD2Int)).collect(Collectors.toList());
+            }
+        }
+
+        if (rbalçadaD.isSelected()){
+            if (!alçada1D.getText().equals(""))
+                pacients=pacients.stream().filter(pacient -> pacient.getAlçada()==(alçadaD1Int)).collect(Collectors.toList());
+        }else {
+            if (!(alçada1D.getText().equals("") && alçada2D.getText().equals(""))){
+                pacients=pacients.stream().filter(pacient ->
+                        pacient.getAlçada()>(alçadaD1Int) && pacient.getAlçada()<(alçadaD2Int)).collect(Collectors.toList());
+            }
+        }
+        long pacients2=pacients.stream().count();
+        idPieChart.setTitle("RESULTATS");
+        idPieChart.getData().add(new PieChart.Data("COINCIDENTS: " + pacients2,pacients2));
+        idPieChart.getData().add(new PieChart.Data("RESTA: " + (totalPacientes-pacients2),totalPacientes-pacients2));
     }
 
     public void btnGraphic(ActionEvent event) {
