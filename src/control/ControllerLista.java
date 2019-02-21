@@ -258,8 +258,6 @@ public class ControllerLista implements Initializable {
         }
     }
 
-
-
     public void btnChart(ActionEvent event) {
         setChart();
     }
