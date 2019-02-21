@@ -426,6 +426,3 @@ public class ControllerLista implements Initializable {
 
         }
     }
-
-
-
