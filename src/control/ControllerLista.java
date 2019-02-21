@@ -1,28 +1,38 @@
 package control;
 
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import model.Pacient;
 import model.Hospital;
 import model.Persona;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerLista implements Initializable {
@@ -40,6 +50,8 @@ public class ControllerLista implements Initializable {
     @FXML BarChart<String, Number> idBarChart;
     @FXML CategoryAxis xAxis;
     @FXML NumberAxis yAxis;
+    @FXML AnchorPane arriba;
+
 
     private int edat1Int, edat2Int;
     private float pes1Int, pes2Int;
@@ -301,7 +313,6 @@ public class ControllerLista implements Initializable {
 
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Fiat");
-        series1.getData().add(new XYChart.Data<>("Speed", 1.0));
         series1.getData().add(new XYChart.Data<>("User rating", 3.0));
         series1.getData().add(new XYChart.Data<>("Milage", 5.0));
         series1.getData().add(new XYChart.Data<>("Safety", 5.0));
@@ -320,10 +331,35 @@ public class ControllerLista implements Initializable {
         tablePacients.setItems(data);
     }
 
-    public void clickTable(MouseEvent event) {
+    public void clickTable(MouseEvent event) throws Exception {
+
+
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
             System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Estadisticas");
+            alert.setHeaderText("Partidas Ganadas");
+            alert.setContentText("Este hombre o mujer sera operado, si estoy asumiendo tu puto sexo");
+
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if(!result.isPresent()) {
+                // alert is exited, no button has been pressed.
+            }
+            else if(result.get() == ButtonType.OK){
+                System.out.println("hahhaha");
+            }
+            //oke button is pressed
+            else if(result.get() == ButtonType.CANCEL){
+                System.out.println("hhihihihi");
+            }
+            // cancel button is pressed
+        }
+
         }
     }
-}
+
+
+
