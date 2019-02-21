@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.chart.*?>
+<?import javafx.scene.chart.PieChart?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerLista">
     <children>
@@ -17,7 +18,15 @@
             <children>
                 <TableView fx:id="tablePacients" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 <Button fx:id="btnLoadFile" maxWidth="1.7976931348623157E308" onAction="#clickLoadFile" text="Load" />
-                <HBox spacing="5.0">
+                <AnchorPane>
+                    <children>
+                        <TabPane fx:id="TabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <tabs>
+                                <Tab fx:id="tabFiltre" text="Filtre">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0">
+                                            <children>
+                <HBox layoutX="14.0" layoutY="14.0" spacing="5.0">
                     <children>
                         <TextField fx:id="txtDNI" maxWidth="1.7976931348623157E308" promptText="DNI" />
                         <TextField fx:id="txtNom" maxWidth="1.7976931348623157E308" promptText="Nom" />
@@ -31,7 +40,7 @@
                         <Insets top="5.0" />
                     </padding>
                 </HBox>
-            <HBox spacing="5.0">
+            <HBox layoutX="14.0" layoutY="53.0" spacing="5.0">
                <children>
                   <TextField fx:id="edat1" maxWidth="1.7976931348623157E308" promptText="Edat" />
                   <Text fx:id="planoEdat" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
@@ -58,7 +67,7 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox layoutX="12.0" layoutY="100.0" spacing="5.0">
                <children>
                   <TextField fx:id="peso1" maxWidth="1.7976931348623157E308" promptText="Pes" />
                   <Text fx:id="planoPeso" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
@@ -75,7 +84,7 @@
                         <ToggleGroup fx:id="peso" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbrangpeso" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#makeVisPeso" text="Rang de pes " toggleGroup="$peso">
+                  <RadioButton fx:id="rbrangpeso" mnemonicParsing="false" onAction="#makeVisPeso" text="Rang de pes " toggleGroup="$peso">
                      <HBox.margin>
                         <Insets left="37.0" />
                      </HBox.margin>
@@ -85,7 +94,7 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox layoutX="13.0" layoutY="147.0" spacing="5.0">
                <children>
                   <TextField fx:id="alçada1" maxWidth="1.7976931348623157E308" promptText="Alçada" />
                   <Text fx:id="planoAlçada" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
@@ -112,6 +121,24 @@
                   <Insets top="5.0" />
                </padding>
             </HBox>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+                                <Tab fx:id="tabDades" onSelectionChanged="#loadChart" text="Dades">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                            <children>
+                                                <PieChart fx:id="idPieChart" prefHeight="255.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
+                                                <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnChart" text="Chart" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </children>
+                </AnchorPane>
             </children>
         </VBox>
     </children>

@@ -37,7 +37,6 @@ public class ControllerLista implements Initializable {
     @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada;
     @FXML PieChart idPieChart;
 
-
     private int edat1Int, edat2Int;
     private float pes1Int, pes2Int;
     private int alçada1Int;
@@ -223,25 +222,6 @@ public class ControllerLista implements Initializable {
         }
     }
 
-
-
-    public void changeText(KeyEvent keyEvent) {
-        data.clear();
-        List<Pacient> pacients = p.stream()
-                .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
-                .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
-                .collect(Collectors.toList());
-        data.addAll(pacients);
-        tablePacients.setItems(data);
-    }
-
-    public void clickTable(MouseEvent event) {
-        //Cal verificar si hi ha alguna selecció feta al fer doble click
-        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
-            System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
-        }
-    }
-
     public void btnChart(ActionEvent event) {
         setChart();
     }
@@ -262,5 +242,24 @@ public class ControllerLista implements Initializable {
         idPieChart.getData().add(new PieChart.Data(Persona.Genere.DONA.toString(),dones));
         idPieChart.getData().add(new PieChart.Data(Persona.Genere.HOME.toString(),homes));
 
+    }
+
+
+
+    public void changeText(KeyEvent keyEvent) {
+        data.clear();
+        List<Pacient> pacients = p.stream()
+                .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
+                .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
+                .collect(Collectors.toList());
+        data.addAll(pacients);
+        tablePacients.setItems(data);
+    }
+
+    public void clickTable(MouseEvent event) {
+        //Cal verificar si hi ha alguna selecció feta al fer doble click
+        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
+            System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
+        }
     }
 }
