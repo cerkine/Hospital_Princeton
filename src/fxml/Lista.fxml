@@ -125,7 +125,7 @@
                     </AnchorPane>
                 </content>
             </Tab>
-                                <Tab fx:id="tabDades" onSelectionChanged="#loadChart" text="Dades">
+                                <Tab fx:id="tabDades" onSelectionChanged="#loadChart" text="Dades ">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
@@ -135,6 +135,23 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
+                        <Tab fx:id="tabDades1" onSelectionChanged="#loadGraphic" text="Grafica">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnGraphic" text="Graphic" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                    <BarChart fx:id="idBarChart" layoutX="70.0" layoutY="46.0" prefHeight="189.0" prefWidth="460.0">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis fx:id="yAxis" side="LEFT" />
+                                      </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                             </tabs>
                         </TabPane>
                     </children>

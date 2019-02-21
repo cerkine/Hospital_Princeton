@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
@@ -20,6 +20,7 @@ import model.Persona;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -36,6 +37,9 @@ public class ControllerLista implements Initializable {
     @FXML Text planoEdat, planoPeso,planoAlçada;
     @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada;
     @FXML PieChart idPieChart;
+    @FXML BarChart<String, Number> idBarChart;
+    @FXML CategoryAxis xAxis;
+    @FXML NumberAxis yAxis;
 
     private int edat1Int, edat2Int;
     private float pes1Int, pes2Int;
@@ -244,7 +248,35 @@ public class ControllerLista implements Initializable {
 
     }
 
+    public void btnGraphic(ActionEvent event) {
+        setGraphic();
+    }
 
+    public void loadGraphic(Event event) {
+        setGraphic();
+    }
+
+    private void setGraphic() {
+        idBarChart.getData().clear();
+        xAxis = new CategoryAxis();
+        xAxis.setLabel("category");
+
+        yAxis = new NumberAxis();
+        yAxis.setLabel("score");
+
+        idBarChart = new BarChart<>(xAxis, yAxis);
+        idBarChart.setTitle("Comparison between various cars");
+
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Fiat");
+        series1.getData().add(new XYChart.Data<>("Speed", 1.0));
+        series1.getData().add(new XYChart.Data<>("User rating", 3.0));
+        series1.getData().add(new XYChart.Data<>("Milage", 5.0));
+        series1.getData().add(new XYChart.Data<>("Safety", 5.0));
+
+        idBarChart.getData().add(series1);
+
+    }
 
     public void changeText(KeyEvent keyEvent) {
         data.clear();
