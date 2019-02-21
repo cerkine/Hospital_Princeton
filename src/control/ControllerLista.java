@@ -33,9 +33,9 @@ public class ControllerLista implements Initializable {
 
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
-    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2,alçada1,alçada2;
-    @FXML Text planoEdat, planoPeso,planoAlçada;
-    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada;
+    @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2,alçada1,alçada2,edat1D,edat2D,peso1D,peso2D,alçada1D,alçada2D;
+    @FXML Text planoEdat, planoPeso,planoAlçada,planoEdatD,planoPesoD,planoAlçadaD;
+    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada,rbedatD,rbrangedatD,rbpesoD,rbrangpesoD,rbalçadaD;
     @FXML PieChart idPieChart;
     @FXML BarChart<String, Number> idBarChart;
     @FXML CategoryAxis xAxis;
@@ -192,11 +192,23 @@ public class ControllerLista implements Initializable {
             planoEdat.setVisible(false);
             edat2.setVisible(false);
         }
-        else if (rbrangedat.isSelected()){
-            planoEdat.setVisible(true);
-            edat2.setVisible(true);
+        else if (rbrangedatD.isSelected()){
+            planoEdatD.setVisible(true);
+            edat2D.setVisible(true);
         }
     }
+
+    public void makeVisEdat2(ActionEvent event){
+        if (rbedatD.isSelected()){
+            planoEdatD.setVisible(false);
+            edat2D.setVisible(false);
+        }
+        else if (rbrangedatD.isSelected()){
+            planoEdatD.setVisible(true);
+            edat2D.setVisible(true);
+        }
+    }
+
 
     public void makeVisPeso(ActionEvent event){
         if (rbpeso.isSelected()){
@@ -206,6 +218,16 @@ public class ControllerLista implements Initializable {
         else if (rbrangpeso.isSelected()){
             planoPeso.setVisible(true);
             peso2.setVisible(true);
+        }
+    }
+    public void makeVisPeso2(ActionEvent event){
+        if (rbpesoD.isSelected()){
+            planoPesoD.setVisible(false);
+            peso2D.setVisible(false);
+        }
+        else if (rbrangpesoD.isSelected()){
+            planoPesoD.setVisible(true);
+            peso2D.setVisible(true);
         }
     }
 
@@ -225,6 +247,18 @@ public class ControllerLista implements Initializable {
             alçada2.setVisible(true);
         }
     }
+    public void makeVisAlçada2(ActionEvent event){
+        if (rbalçadaD.isSelected()){
+            planoAlçadaD.setVisible(false);
+            alçada2D.setVisible(false);
+        }
+        else{
+            planoAlçadaD.setVisible(true);
+            alçada2D.setVisible(true);
+        }
+    }
+
+
 
     public void btnChart(ActionEvent event) {
         setChart();

@@ -129,8 +129,89 @@
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
-                                                <PieChart fx:id="idPieChart" prefHeight="255.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0" />
+                                                <PieChart fx:id="idPieChart" layoutX="376.0" layoutY="25.0" prefHeight="232.0" prefWidth="210.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="25.0" />
                                                 <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnChart" text="Chart" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                <HBox layoutX="12.0" layoutY="100.0" spacing="5.0">
+                                                    <children>
+                                                        <TextField fx:id="peso1D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Pes" />
+                                                        <Text fx:id="planoPesoD" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
+                                                            <HBox.margin>
+                                                                <Insets left="10.0" right="10.0" top="5.0" />
+                                                            </HBox.margin>
+                                                        </Text>
+                                                        <TextField fx:id="peso2D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Pes" visible="false" />
+                                                        <RadioButton fx:id="rbpesoD" mnemonicParsing="false" onAction="#makeVisPeso2" selected="true" text="Pes">
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin>
+                                                            <toggleGroup>
+                                                                <ToggleGroup fx:id="pesoD" />
+                                                            </toggleGroup>
+                                                        </RadioButton>
+                                                        <RadioButton fx:id="rbrangpesoD" mnemonicParsing="false" onAction="#makeVisPeso2" text="Rang de pes " toggleGroup="$pesoD">
+                                                            <HBox.margin>
+                                                                <Insets left="37.0" />
+                                                            </HBox.margin>
+                                                        </RadioButton>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets top="5.0" />
+                                                    </padding>
+                                                </HBox>
+                                                <HBox layoutX="14.0" layoutY="53.0" spacing="5.0">
+                                                    <children>
+                                                        <TextField fx:id="edat1D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Edat" />
+                                                        <Text fx:id="planoEdatD" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
+                                                            <HBox.margin>
+                                                                <Insets left="10.0" right="10.0" top="5.0" />
+                                                            </HBox.margin>
+                                                        </Text>
+                                                        <TextField fx:id="edat2D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Edat" visible="false" />
+                                                        <RadioButton fx:id="rbedatD" mnemonicParsing="false" onAction="#makeVisEdat2" selected="true" text="Edat">
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin>
+                                                            <toggleGroup>
+                                                                <ToggleGroup fx:id="EDADD" />
+                                                            </toggleGroup>
+                                                        </RadioButton>
+                                                        <RadioButton fx:id="rbrangedatD" mnemonicParsing="false" onAction="#makeVisEdat2" text="Rang d'edats " toggleGroup="$EDADD">
+                                                            <HBox.margin>
+                                                                <Insets left="32.0" />
+                                                            </HBox.margin>
+                                                        </RadioButton>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets top="5.0" />
+                                                    </padding>
+                                                </HBox>
+                                                <HBox layoutX="13.0" layoutY="147.0" spacing="5.0">
+                                                    <children>
+                                                        <TextField fx:id="alçada1D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Alçada" />
+                                                        <Text fx:id="planoAlçadaD" strokeType="OUTSIDE" strokeWidth="0.0" text="Entre" visible="false">
+                                                            <HBox.margin>
+                                                                <Insets left="10.0" right="10.0" top="5.0" />
+                                                            </HBox.margin>
+                                                        </Text>
+                                                        <TextField fx:id="alçada2D" maxWidth="1.7976931348623157E308" prefWidth="50.0" promptText="Alçada" visible="false" />
+                                                        <RadioButton fx:id="rbalçadaD" mnemonicParsing="false" onAction="#makeVisAlçada2" selected="true" text="Alçada">
+                                                            <toggleGroup>
+                                                                <ToggleGroup fx:id="EDAD1D" />
+                                                            </toggleGroup>
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin>
+                                                        </RadioButton>
+                                                        <RadioButton fx:id="rbrangalçadaD" mnemonicParsing="false" onAction="#makeVisAlçada2" text="Rang d'alçada" toggleGroup="$EDAD1D">
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin>
+                                                        </RadioButton>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets top="5.0" />
+                                                    </padding>
+                                                </HBox>
                                             </children>
                                         </AnchorPane>
                                     </content>
