@@ -29,9 +29,12 @@ import model.Pacient;
 import model.Hospital;
 import model.Persona;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +43,7 @@ public class ControllerLista implements Initializable {
     private String csvFile = null;
     private List<Pacient> p = new ArrayList<>();
     private ObservableList<Pacient> data;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 
     @FXML TableView<Pacient> tablePacients;
     @FXML Button btnLoadFile;
@@ -402,12 +406,15 @@ public class ControllerLista implements Initializable {
 
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
-            System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Estadisticas");
-            alert.setHeaderText("Partidas Ganadas");
-            alert.setContentText("Este hombre o mujer sera operado, si estoy asumiendo tu puto sexo");
+            alert.setTitle("Paciente");
+            alert.setHeaderText("Datos");
+            alert.setContentText("" +
+                    "Nombre: " + tablePacients.getSelectionModel().getSelectedItem().getNom() +
+                    "\nApellidos: " + tablePacients.getSelectionModel().getSelectedItem().getCognoms() +
+                    "\nDNI: " + tablePacients.getSelectionModel().getSelectedItem().getDNI() +
+                    "\nQuieres añadir a este paciente a la lista de espera?");
 
 
             Optional<ButtonType> result = alert.showAndWait();
@@ -415,11 +422,14 @@ public class ControllerLista implements Initializable {
                 // alert is exited, no button has been pressed.
             }
             else if(result.get() == ButtonType.OK){
-                System.out.println("hahhaha");
+                FileWriter fw= new FileWriter("./src/data/espera.csv", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.newLine();
+                bw.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"");
+                bw.close();
             }
             //oke button is pressed
             else if(result.get() == ButtonType.CANCEL){
-                System.out.println("hhihihihi");
             }
             // cancel button is pressed
         }

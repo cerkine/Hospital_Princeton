@@ -18,7 +18,15 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AnchorPane anchorPaneLlista = null;
+        paneDret.getChildren().clear();
+        try {
+            anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/LlistaEspera.fxml"));
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        paneDret.getChildren().add(anchorPaneLlista);
     }
 
     @FXML
