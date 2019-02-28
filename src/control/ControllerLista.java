@@ -29,11 +29,10 @@ import model.Pacient;
 import model.Hospital;
 import model.Persona;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -407,32 +406,66 @@ public class ControllerLista implements Initializable {
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Paciente");
-            alert.setHeaderText("Datos");
-            alert.setContentText("" +
-                    "Nombre: " + tablePacients.getSelectionModel().getSelectedItem().getNom() +
-                    "\nApellidos: " + tablePacients.getSelectionModel().getSelectedItem().getCognoms() +
-                    "\nDNI: " + tablePacients.getSelectionModel().getSelectedItem().getDNI() +
-                    "\nQuieres añadir a este paciente a la lista de espera?");
+            File file = new File ("./src/data/espera.csv");
+            FileReader fr= new FileReader("./src/data/espera.csv");
+            BufferedReader br = new BufferedReader(fr);
+            String line = tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"";
+            boolean found = findLine(br, file, line);
+
+            if (found){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Paciente");
+                alert.setHeaderText("Datos");
+                alert.setContentText("" +
+                        "Nombre: " + tablePacients.getSelectionModel().getSelectedItem().getNom() +
+                        "\nApellidos: " + tablePacients.getSelectionModel().getSelectedItem().getCognoms() +
+                        "\nDNI: " + tablePacients.getSelectionModel().getSelectedItem().getDNI() +
+                        "\nEste paciente ya esta en la lista de espera");
+                alert.show();
+            }
+            else {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Paciente");
+                alert.setHeaderText("Datos");
+                alert.setContentText("" +
+                        "Nombre: " + tablePacients.getSelectionModel().getSelectedItem().getNom() +
+                        "\nApellidos: " + tablePacients.getSelectionModel().getSelectedItem().getCognoms() +
+                        "\nDNI: " + tablePacients.getSelectionModel().getSelectedItem().getDNI() +
+                        "\nQuieres añadir a este paciente a la lista de espera?");
 
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if(!result.isPresent()) {
-                // alert is exited, no button has been pressed.
+                Optional<ButtonType> result = alert.showAndWait();
+                if (!result.isPresent()) {
+                    // alert is exited, no button has been pressed.
+                } else if (result.get() == ButtonType.OK) {
+                    FileWriter fw = new FileWriter("./src/data/espera.csv", true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.newLine();
+                    bw.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom() + "," + tablePacients.getSelectionModel().getSelectedItem().getCognoms() + "," + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter) + "," + tablePacients.getSelectionModel().getSelectedItem().getGenere() + "," + tablePacients.getSelectionModel().getSelectedItem().getTelefon() + ",\"" + tablePacients.getSelectionModel().getSelectedItem().getPes() + "\",\"" + tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"");
+                    bw.close();
+                }
+                //oke button is pressed
+                else if (result.get() == ButtonType.CANCEL) {
+                }
+                // cancel button is pressed
             }
-            else if(result.get() == ButtonType.OK){
-                FileWriter fw= new FileWriter("./src/data/espera.csv", true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.newLine();
-                bw.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"");
-                bw.close();
-            }
-            //oke button is pressed
-            else if(result.get() == ButtonType.CANCEL){
-            }
-            // cancel button is pressed
         }
 
         }
+
+    public boolean findLine(BufferedReader br , File f, String Line) throws IOException{
+
+        List<String> lines = Files.readAllLines(f.toPath(),
+                StandardCharsets.UTF_8);
+
+        for (int i = 1; i < lines.size(); i++){
+            if (lines.get(i).equals(Line)){
+                return true;
+            }
+        }
+
+        return false;
+
     }
+}

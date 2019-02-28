@@ -31,9 +31,6 @@ public class ControllerListaEspera implements Initializable {
     TableView<Pacient> tablePacients;
     private List<Pacient> p = new ArrayList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-    public int contador;
-    public int lineas;
-    public boolean ultimo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,8 +86,6 @@ public class ControllerListaEspera implements Initializable {
                 // alert is exited, no button has been pressed.
             }
             else if(result.get() == ButtonType.OK){
-                contador = 0;
-                ultimo = false;
                 File file = new File ("./src/data/espera.csv");
                 FileReader fw= new FileReader("./src/data/espera.csv");
                 BufferedReader bw = new BufferedReader(fw);
@@ -144,26 +139,6 @@ public class ControllerListaEspera implements Initializable {
         br.close();
     }
 
-//    public int count(String filename) throws IOException {
-//        InputStream is = new BufferedInputStream(new FileInputStream(filename));
-//        try {
-//            byte[] c = new byte[1024];
-//            int count = 0;
-//            int readChars = 0;
-//            boolean empty = true;
-//            while ((readChars = is.read(c)) != -1) {
-//                empty = false;
-//                for (int i = 0; i < readChars; ++i) {
-//                    if (c[i] == '\n') {
-//                        ++count;
-//                    }
-//                }
-//            }
-//            return (count == 0 && !empty) ? 1 : count;
-//        } finally {
-//            is.close();
-//        }
-//    }
 
 
 }
