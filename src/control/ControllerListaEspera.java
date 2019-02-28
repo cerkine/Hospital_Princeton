@@ -15,6 +15,8 @@ import model.Pacient;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,9 @@ public class ControllerListaEspera implements Initializable {
     TableView<Pacient> tablePacients;
     private List<Pacient> p = new ArrayList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-
+    public int contador;
+    public int lineas;
+    public boolean ultimo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,7 +71,6 @@ public class ControllerListaEspera implements Initializable {
 
     public void clickTable(MouseEvent event) throws Exception {
 
-
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
 
@@ -86,12 +89,14 @@ public class ControllerListaEspera implements Initializable {
                 // alert is exited, no button has been pressed.
             }
             else if(result.get() == ButtonType.OK){
-
+                contador = 0;
+                ultimo = false;
                 File file = new File ("./src/data/espera.csv");
                 FileReader fw= new FileReader("./src/data/espera.csv");
                 BufferedReader bw = new BufferedReader(fw);
                 String line = tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"";
                 removeLine(bw, file, line);
+
                 bw.close();
                 fw.close();
 
@@ -102,6 +107,7 @@ public class ControllerListaEspera implements Initializable {
                 data.addAll(p);
                 tablePacients.setItems(data);
 
+
             }
             //oke button is pressed
             else if(result.get() == ButtonType.CANCEL){
@@ -111,28 +117,53 @@ public class ControllerListaEspera implements Initializable {
 
     }
 
-    public static void removeLine(BufferedReader br , File f, String Line) throws IOException{
-        File temp = new File("temp.csv");
+    public  void removeLine(BufferedReader br , File f, String Line) throws IOException{
+
+        List<String> lines = Files.readAllLines(f.toPath(),
+                StandardCharsets.UTF_8);
+
+        for (int i = 1; i < lines.size(); i++){
+            if (lines.get(i).equals(Line)){
+                lines.remove(i);
+            }
+        }
+
+        File temp = new File(f.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
-        String removeID = Line;
-        String currentLine;
-        while((currentLine = br.readLine()) != null){
-            String trimmedLine = currentLine.trim();
-            if(trimmedLine.equals(removeID)){
-                currentLine = "";
+        for (int i = 0; i < lines.size(); i++){
+            if (i == lines.size()-1){
+                bw.write(lines.get(i));
             }
             else {
-                bw.write(currentLine + System.getProperty("line.separator"));
+                bw.write(lines.get(i) + "\n");
             }
 
-
         }
+
         bw.close();
         br.close();
-        f.delete();
-        temp.renameTo(f);
     }
 
+//    public int count(String filename) throws IOException {
+//        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+//        try {
+//            byte[] c = new byte[1024];
+//            int count = 0;
+//            int readChars = 0;
+//            boolean empty = true;
+//            while ((readChars = is.read(c)) != -1) {
+//                empty = false;
+//                for (int i = 0; i < readChars; ++i) {
+//                    if (c[i] == '\n') {
+//                        ++count;
+//                    }
+//                }
+//            }
+//            return (count == 0 && !empty) ? 1 : count;
+//        } finally {
+//            is.close();
+//        }
+//    }
 
 
 }
