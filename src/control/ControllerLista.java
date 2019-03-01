@@ -371,21 +371,26 @@ public class ControllerLista implements Initializable {
 
     private void setGraphic() {
         idBarChart.getData().clear();
-        xAxis = new CategoryAxis();
-        xAxis.setLabel("category");
+        xAxis.setLabel("Age");
 
-        yAxis = new NumberAxis();
-        yAxis.setLabel("score");
+        yAxis.setLabel("Number");
 
-        idBarChart = new BarChart<>(xAxis, yAxis);
-        idBarChart.setTitle("Comparison between various cars");
+        Map<String, Integer> edades = new HashMap<>();
 
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Fiat");
-        series1.getData().add(new XYChart.Data<>("User rating", 3.0));
-        series1.getData().add(new XYChart.Data<>("Milage", 5.0));
-        series1.getData().add(new XYChart.Data<>("Safety", 5.0));
+        for (int i = 0; i < p.size(); i++) {
+            if (edades.containsKey(String.valueOf(p.get(i).getEdat()))){
+                edades.put(String.valueOf(p.get(i).getEdat()), edades.get(String.valueOf(p.get(i).getEdat())) +1);
+            }
+            else {
+                edades.put(String.valueOf(p.get(i).getEdat()), + 1);
 
+            }
+        }
+        XYChart.Series<String,Number> series1 =  new XYChart.Series<String,Number>();
+        for ( String key: edades.keySet()) {
+            series1.getData().add(new XYChart.Data<>(key, edades.get(key)));
+
+        }
         idBarChart.getData().add(series1);
 
     }
