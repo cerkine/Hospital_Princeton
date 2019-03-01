@@ -69,9 +69,9 @@ public class ControllerListaEspera implements Initializable {
     public void clickTable(MouseEvent event) throws Exception {
 
         //Cal verificar si hi ha alguna selecció feta al fer doble click
-        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
+        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){ //Si en la lista de espera se clica 2 veces en un paciente
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION); //Lanzamos una alerta confirmando que quiere eliminarlo
             alert.setTitle("Paciente");
             alert.setHeaderText("Datos");
             alert.setContentText("" +
@@ -85,17 +85,17 @@ public class ControllerListaEspera implements Initializable {
             if(!result.isPresent()) {
                 // alert is exited, no button has been pressed.
             }
-            else if(result.get() == ButtonType.OK){
+            else if(result.get() == ButtonType.OK){ //Si el resultado es afirmativo
                 File file = new File ("./src/data/espera.csv");
                 FileReader fw= new FileReader("./src/data/espera.csv");
                 BufferedReader bw = new BufferedReader(fw);
                 String line = tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"";
-                removeLine(bw, file, line);
+                removeLine(bw, file, line); //llamamos al metodo para eliminar la fila
 
                 bw.close();
                 fw.close();
 
-                data.clear();
+                data.clear(); //Y actualizamos los datos
                 data = FXCollections.observableArrayList();
                 p = new ArrayList<>();
                 loadData();
@@ -112,18 +112,18 @@ public class ControllerListaEspera implements Initializable {
 
     }
 
-    public  void removeLine(BufferedReader br , File f, String Line) throws IOException{
+    public  void removeLine(BufferedReader br , File f, String Line) throws IOException{ //Metodo para eliminar linea
 
         List<String> lines = Files.readAllLines(f.toPath(),
-                StandardCharsets.UTF_8);
+                StandardCharsets.UTF_8); //Obtenemos todas las lineas del archivo que se le pasa
 
-        for (int i = 1; i < lines.size(); i++){
-            if (lines.get(i).equals(Line)){
+        for (int i = 1; i < lines.size(); i++){ //Recorremos esta array saltando la primera posicion donde esta la definicion
+            if (lines.get(i).equals(Line)){ //Si esa linea es la que queremos borrar, la eliminamos de la array
                 lines.remove(i);
             }
         }
 
-        File temp = new File(f.getPath());
+        File temp = new File(f.getPath()); //Y escribimos en el archivo los restantes
         BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
         for (int i = 0; i < lines.size(); i++){
             if (i == lines.size()-1){

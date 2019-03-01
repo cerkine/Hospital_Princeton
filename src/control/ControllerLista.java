@@ -374,26 +374,28 @@ public class ControllerLista implements Initializable {
 
         XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
 
+        //Segun el boton que se haya seleccionado, hacemos lo mismo pero cogiendo los datos corrspondientes
         if(rbedatG.isSelected()) {
             xAxis.setLabel("Edat");
 
             yAxis.setLabel("Number");
 
-            Map<String, Integer> edades = new HashMap<>();
+            Map<String, Integer> edades = new HashMap<>(); //Creamos un map para almacenar los datos que encontremos
 
-            for (int i = 0; i < p.size(); i++) {
-                if (edades.containsKey(String.valueOf(p.get(i).getEdat()))) {
-                    edades.put(String.valueOf(p.get(i).getEdat()), edades.get(String.valueOf(p.get(i).getEdat())) + 1);
+            for (int i = 0; i < p.size(); i++) { //Recorremos la array de los pacientes
+                if (edades.containsKey(String.valueOf(p.get(i).getEdat()))) { //Si en el mapa de los datos ya esta este valor
+                    edades.put(String.valueOf(p.get(i).getEdat()), edades.get(String.valueOf(p.get(i).getEdat())) + 1); //Sumamos uno al valor de esa clave
                 } else {
-                    edades.put(String.valueOf(p.get(i).getEdat()), +1);
+                    edades.put(String.valueOf(p.get(i).getEdat()), +1); //Sino lo creamos y lo inicializamos a 1
 
                 }
             }
             for (String key : edades.keySet()) {
-                series1.getData().add(new XYChart.Data<>(key, edades.get(key)));
+                series1.getData().add(new XYChart.Data<>(key, edades.get(key))); //Creamos la tabla XY
 
             }
         }
+        //Hacemos lo mismo para los otros botones cogindo su informacion correspondiente
         if (rbpesG.isSelected()){
 
             xAxis.setLabel("Pes");
@@ -438,33 +440,24 @@ public class ControllerLista implements Initializable {
             }
 
         }
-        idBarChart.getData().add(series1);
+        idBarChart.getData().add(series1); //Y añadimos el mapa a la grafica
 
     }
 
-    public void changeText(KeyEvent keyEvent) {
-        data.clear();
-        List<Pacient> pacients = p.stream()
-                .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
-                .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
-                .collect(Collectors.toList());
-        data.addAll(pacients);
-        tablePacients.setItems(data);
-    }
 
     public void clickTable(MouseEvent event) throws Exception {
 
 
         //Cal verificar si hi ha alguna selecció feta al fer doble click
-        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
-
+        if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){ //Cuando se hace dobleclick en un paciente
+            //Se comprueba si ya esta en la lista de espera
             File file = new File ("./src/data/espera.csv");
             FileReader fr= new FileReader("./src/data/espera.csv");
             BufferedReader br = new BufferedReader(fr);
             String line = tablePacients.getSelectionModel().getSelectedItem().getDNI() + "," + tablePacients.getSelectionModel().getSelectedItem().getNom()+ "," +tablePacients.getSelectionModel().getSelectedItem().getCognoms()+ "," +tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().format(formatter)+ "," +tablePacients.getSelectionModel().getSelectedItem().getGenere()+ "," +tablePacients.getSelectionModel().getSelectedItem().getTelefon()+ ",\"" +tablePacients.getSelectionModel().getSelectedItem().getPes()+"\",\""+tablePacients.getSelectionModel().getSelectedItem().getAlçada() + "\"";
             boolean found = findLine(br, file, line);
 
-            if (found){
+            if (found){ //Si esta, lanzamos un aviso de que ya esta en la lista de espera
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Paciente");
                 alert.setHeaderText("Datos");
@@ -475,7 +468,7 @@ public class ControllerLista implements Initializable {
                         "\nEste paciente ya esta en la lista de espera");
                 alert.show();
             }
-            else {
+            else { //Sino, preguntamos al usuario si lo quire añadir, mostrando los datos del paciente
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Paciente");
@@ -490,7 +483,7 @@ public class ControllerLista implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (!result.isPresent()) {
                     // alert is exited, no button has been pressed.
-                } else if (result.get() == ButtonType.OK) {
+                } else if (result.get() == ButtonType.OK) { //En caso afirmativo, lo añadimos al archivo de la lista de espera
                     FileWriter fw = new FileWriter("./src/data/espera.csv", true);
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.newLine();
@@ -506,7 +499,7 @@ public class ControllerLista implements Initializable {
 
         }
 
-    public boolean findLine(BufferedReader br , File f, String Line) throws IOException{
+    public boolean findLine(BufferedReader br , File f, String Line) throws IOException{ //Metodo para comprobar linea por linea si esta el paciente en el archivo
 
         List<String> lines = Files.readAllLines(f.toPath(),
                 StandardCharsets.UTF_8);
