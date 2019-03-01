@@ -48,7 +48,7 @@ public class ControllerLista implements Initializable {
     @FXML Button btnLoadFile;
     @FXML TextField txtDNI, txtNom, txtCognoms, edat1, edat2, peso1, peso2,alçada1,alçada2,edat1D,edat2D,peso1D,peso2D,alçada1D,alçada2D;
     @FXML Text planoEdat, planoPeso,planoAlçada,planoEdatD,planoPesoD,planoAlçadaD;
-    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada,rbedatD,rbrangedatD,rbpesoD,rbrangpesoD,rbalçadaD;
+    @FXML RadioButton rbedat, rbrangedat, rbpeso, rbrangpeso,rbalçada,rbedatD,rbrangedatD,rbpesoD,rbrangpesoD,rbalçadaD,rbedatG,rbalçadaG,rbpesG;
     @FXML PieChart idPieChart;
     @FXML BarChart<String, Number> idBarChart;
     @FXML CategoryAxis xAxis;
@@ -369,26 +369,73 @@ public class ControllerLista implements Initializable {
         setGraphic();
     }
 
-    private void setGraphic() {
+    public void setGraphic() {
         idBarChart.getData().clear();
-        xAxis.setLabel("Age");
 
-        yAxis.setLabel("Number");
+        XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
 
-        Map<String, Integer> edades = new HashMap<>();
+        if(rbedatG.isSelected()) {
+            xAxis.setLabel("Edat");
 
-        for (int i = 0; i < p.size(); i++) {
-            if (edades.containsKey(String.valueOf(p.get(i).getEdat()))){
-                edades.put(String.valueOf(p.get(i).getEdat()), edades.get(String.valueOf(p.get(i).getEdat())) +1);
+            yAxis.setLabel("Number");
+
+            Map<String, Integer> edades = new HashMap<>();
+
+            for (int i = 0; i < p.size(); i++) {
+                if (edades.containsKey(String.valueOf(p.get(i).getEdat()))) {
+                    edades.put(String.valueOf(p.get(i).getEdat()), edades.get(String.valueOf(p.get(i).getEdat())) + 1);
+                } else {
+                    edades.put(String.valueOf(p.get(i).getEdat()), +1);
+
+                }
             }
-            else {
-                edades.put(String.valueOf(p.get(i).getEdat()), + 1);
+            for (String key : edades.keySet()) {
+                series1.getData().add(new XYChart.Data<>(key, edades.get(key)));
 
             }
         }
-        XYChart.Series<String,Number> series1 =  new XYChart.Series<String,Number>();
-        for ( String key: edades.keySet()) {
-            series1.getData().add(new XYChart.Data<>(key, edades.get(key)));
+        if (rbpesG.isSelected()){
+
+            xAxis.setLabel("Pes");
+
+            yAxis.setLabel("Number");
+
+            Map<String, Integer> pesos = new HashMap<>();
+
+            for (int i = 0; i < p.size(); i++) {
+                if (pesos.containsKey(String.valueOf(p.get(i).getPes()))) {
+                    pesos.put(String.valueOf(p.get(i).getPes()), pesos.get(String.valueOf(p.get(i).getPes())) + 1);
+                } else {
+                    pesos.put(String.valueOf(p.get(i).getPes()), +1);
+
+                }
+            }
+            for (String key : pesos.keySet()) {
+                series1.getData().add(new XYChart.Data<>(key, pesos.get(key)));
+
+            }
+
+        }
+        if (rbalçadaG.isSelected()){
+
+            xAxis.setLabel("Alçada");
+
+            yAxis.setLabel("Number");
+
+            Map<String, Integer> alçada = new HashMap<>();
+
+            for (int i = 0; i < p.size(); i++) {
+                if (alçada.containsKey(String.valueOf(p.get(i).getAlçada()))) {
+                    alçada.put(String.valueOf(p.get(i).getAlçada()), alçada.get(String.valueOf(p.get(i).getAlçada())) + 1);
+                } else {
+                    alçada.put(String.valueOf(p.get(i).getAlçada()), +1);
+
+                }
+            }
+            for (String key : alçada.keySet()) {
+                series1.getData().add(new XYChart.Data<>(key, alçada.get(key)));
+
+            }
 
         }
         idBarChart.getData().add(series1);
