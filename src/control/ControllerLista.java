@@ -1,33 +1,21 @@
 package control;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import model.Pacient;
 import model.Hospital;
-import model.Persona;
+import model.Pacient;
 
 import java.io.*;
 import java.net.URL;
@@ -98,7 +86,7 @@ public class ControllerLista implements Initializable {
 
         tablePacients.getColumns().addAll(DNI, Nom, Cognoms, DataNaix, Genre, Telefon, pes, Alçada);
 
-        //data.add(new Pacient("111", "n", "co", LocalDate.of(2000, 12, 12), Persona.Genere.HOME, "55555", 5.4f, 100));
+
         loadData();
         data.addAll(p);
         tablePacients.setItems(data);
@@ -124,6 +112,11 @@ public class ControllerLista implements Initializable {
         }
     }
 
+    /**
+     * Metodo para hacer la busqueda, los if estan porque el codigo te permite que en un rango de edades o peso, si dejas un campo vacio se entiende que es todos
+     * los que sean mas pequeño o mas grande que el campo que has escrito y eso lo hacemos con la cadeana de if asignado el maximo valor o el minimo
+     * @param event
+     */
     public void btnCerca(ActionEvent event) {
 
         List<Pacient> pacients = p.stream().collect(Collectors.toList());
@@ -206,7 +199,10 @@ public class ControllerLista implements Initializable {
     }
 
 
-
+    /**
+     * Estos metodos es para cambiar la visibilidad de algunos campos segun el radiobutton seleccionado
+     * @param event
+     */
     public void makeVisEdat(ActionEvent event){
         if (rbedat.isSelected()){
             planoEdat.setVisible(false);
@@ -286,6 +282,9 @@ public class ControllerLista implements Initializable {
         setChart();
     }
 
+    /**
+     * Repetimos el mismo funcionamiento que usamos en el buscador pero esta vez lo metemos en una grafica.
+     */
     private void setChart() {
         idPieChart.getData().clear();
         List<Pacient> pacients = p.stream().collect(Collectors.toList());
@@ -442,15 +441,6 @@ public class ControllerLista implements Initializable {
 
     }
 
-    public void changeText(KeyEvent keyEvent) {
-        data.clear();
-        List<Pacient> pacients = p.stream()
-                .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
-                .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
-                .collect(Collectors.toList());
-        data.addAll(pacients);
-        tablePacients.setItems(data);
-    }
 
     public void clickTable(MouseEvent event) throws Exception {
 
